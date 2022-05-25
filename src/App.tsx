@@ -1,5 +1,4 @@
 import { Box, ChakraProvider, Grid, theme } from "@chakra-ui/react";
-import * as React from "react";
 import { ColorModeSwitcher } from "./components/color-mode-switcher/ColorModeSwitcher";
 import { AppRoutes } from "./routes/AppRoutes";
 

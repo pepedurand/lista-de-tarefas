@@ -1,11 +1,12 @@
-import {   BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Login } from "../pages/login/Login";
 
 const AppRoutes = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={<div>Tela de Login</div>}/>
-        <Route path="/" element={<div>Tela de tarefas</div>}/>
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<div>Tela de tarefas</div>} />
       </Routes>
     </Router>
   );
