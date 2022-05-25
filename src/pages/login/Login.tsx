@@ -1,15 +1,11 @@
-import { Box } from "@chakra-ui/react";
-import { EmailInput } from "../../components/EmailInput/EmailInput";
-import { PasswordInput } from "../../components/PasswordInput/PasswordInput";
+import { LoginComponent } from "../../components/LoginComponent/LoginComponent";
+import { Auth } from "../../layouts/auth/Auth";
 
 function Login() {
   return (
-    <div>
-      <Box>
-        <EmailInput />
-        <PasswordInput />
-      </Box>
-    </div>
+    <Auth>
+      <LoginComponent />
+    </Auth>
   );
 }
 
