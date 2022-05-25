@@ -13,7 +13,7 @@ function PasswordInput() {
   const handleClick = () => setShow(!show);
 
   return (
-    <FormControl>
+    <FormControl marginTop="4">
       <FormLabel htmlFor="password">Password</FormLabel>
       <InputGroup size="md">
         <Input
