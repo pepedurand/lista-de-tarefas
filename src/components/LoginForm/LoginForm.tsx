@@ -21,7 +21,7 @@ function LoginComponent() {
         <FormLabel htmlFor="email">Email address</FormLabel>
         <Input id="email" type="email" />
       </FormControl>
-      <PasswordInput />
+      <PasswordInput label="Senha" />
       <Button marginTop="8" marginBottom="4" width="full" colorScheme="blue">
         Entrar
       </Button>
