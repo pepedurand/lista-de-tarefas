@@ -1,7 +1,12 @@
+import { SignUpForm } from "../../components/SignUpForm/SignUpForm";
 import { Auth } from "../../layouts/auth/Auth";
 
 function SignUp() {
-  return <Auth>Formulario de Cadastro</Auth>;
+  return (
+    <Auth>
+      <SignUpForm />
+    </Auth>
+  );
 }
 
 export { SignUp };

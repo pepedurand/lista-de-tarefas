@@ -1,4 +1,4 @@
-import { LoginComponent } from "../../components/LoginComponent/LoginComponent";
+import { LoginComponent } from "../../components/LoginForm/LoginForm";
 import { Auth } from "../../layouts/auth/Auth";
 
 function Login() {
