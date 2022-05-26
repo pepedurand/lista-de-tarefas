@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Login } from "../pages/Login/Login";
+import { Login } from "../pages/login/Login";
 import { SignUp } from "../pages/SignUp/SignUp";
 
 const AppRoutes = () => {

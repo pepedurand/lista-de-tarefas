@@ -8,14 +8,20 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 
-function PasswordInput() {
+interface PasswordInputProps {
+  label: string;
+  texto?: string;
+}
+
+function PasswordInput({ label, texto }: PasswordInputProps) {
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
 
   return (
     <FormControl marginTop="4">
-      <FormLabel htmlFor="password">Password</FormLabel>
+      <FormLabel htmlFor="password">{label}</FormLabel>
       <InputGroup size="md">
+        {texto}
         <Input
           pr="4.5rem"
           type={show ? "text" : "password"}

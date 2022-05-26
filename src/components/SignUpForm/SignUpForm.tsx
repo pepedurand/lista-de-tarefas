@@ -29,8 +29,8 @@ const SignUpForm = () => {
         <FormLabel htmlFor="date">Data de Nascimento</FormLabel>
         <Input id="date" type="date" />
       </FormControl>
-      <PasswordInput />
-      <PasswordInput />
+      <PasswordInput texto="teste" label="Senha" />
+      <PasswordInput label="Confirme sua senha" />
       <Button marginTop="8" marginBottom="4" width="full" colorScheme="blue">
         Cadastrar
       </Button>
