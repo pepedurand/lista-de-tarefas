@@ -12,6 +12,7 @@ const Sidebar = () => {
       height="100vh"
       boxShadow="xl"
       px="4"
+      overflow="hidden"
     >
       <UserInfo />
       <Divider />
