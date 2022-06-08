@@ -1,4 +1,4 @@
-import { CheckIcon, CloseIcon, EditIcon } from "@chakra-ui/icons";
+import { CheckIcon, CloseIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import {
   useEditableControls,
   ButtonGroup,
@@ -11,17 +11,28 @@ import {
   Box,
   Stack,
   Skeleton,
+  Icon,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { deleteTaskList } from "../../services/api/task-list/deleteTaskList";
 
 interface TaskListTitleProps {
   title: string;
+  listId: number;
   onSubmit: (title: string) => void;
   isLoading: boolean;
 }
 
-const TaskListTitle = ({ onSubmit, title, isLoading }: TaskListTitleProps) => {
+const TaskListTitle = ({
+  onSubmit,
+  title,
+  isLoading,
+  listId,
+}: TaskListTitleProps) => {
   const [value, setValue] = useState(title);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     setValue(title);
@@ -56,11 +67,26 @@ const TaskListTitle = ({ onSubmit, title, isLoading }: TaskListTitleProps) => {
           icon={<EditIcon />}
           {...getEditButtonProps()}
         />
+        <IconButton
+          aria-label="deletar lista"
+          size="sm"
+          icon={<DeleteIcon />}
+          onClick={handleDelete}
+        />
       </Flex>
     );
   };
   const handleChange = (newTitle: string) => {
     setValue(newTitle);
+  };
+
+  const handleDelete = async () => {
+    try {
+      await deleteTaskList(listId);
+      navigate("/");
+    } catch (e) {
+      alert("erro");
+    }
   };
 
   return isLoading ? (

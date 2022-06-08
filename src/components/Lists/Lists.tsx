@@ -3,6 +3,7 @@ import { Box, Button, Divider, List, ListItem, Text } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { postTaskList } from "../../services/api/task-list/postTaskList";
 
 interface ListItemData {
   id: number;
@@ -23,18 +24,13 @@ const Lists = () => {
       });
   }, []);
 
-  const handleNewTaskList = () => {
-    axios
-      .post("https://628bc44d667aea3a3e35eb23.mockapi.io/users/1/tasklists", {
-        name: "Minha lista incrivel!",
-      })
-      .then((response) => {
-        setList([...list, response.data]);
-        navigate(`/${response.data.id}`);
-      })
-      .catch((e) => {
-        alert(e.message);
-      });
+  const handleNewTaskList = async () => {
+    try {
+      const response = await postTaskList();
+      navigate(`/${response?.data?.id}`);
+    } catch (e) {
+      alert("erro");
+    }
   };
 
   return (

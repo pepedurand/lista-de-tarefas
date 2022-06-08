@@ -95,6 +95,7 @@ const Tasks = () => {
       <Sidebar />
       <Box padding="8">
         <TaskListTitle
+          listId={selectedList?.id}
           title={selectedList?.name}
           onSubmit={handleTitleChange}
           isLoading={isLoading}

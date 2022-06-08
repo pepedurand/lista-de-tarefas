@@ -9,6 +9,7 @@ import {
   IconButton,
   useEditableControls,
 } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 
 interface TaskItemProps {
   task: any;
@@ -28,7 +29,7 @@ const TaskItem = ({ task, onChange }: TaskItemProps) => {
   return (
     <Grid gap="2" templateColumns="auto 1fr auto" alignItems="center">
       <Checkbox mx="4" />
-      <Editable value={task.task}>
+      <Editable value={task.task} onChange={task.task}>
         <TaskControls>
           <EditablePreview />
           <EditableInput />
