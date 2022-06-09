@@ -1,8 +1,8 @@
 import { CalendarIcon, PlusSquareIcon } from "@chakra-ui/icons";
 import { Box, Button, Divider, List, ListItem, Text } from "@chakra-ui/react";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { getTaskList } from "../../services/api/task-list/getTaskList";
 import { postTaskList } from "../../services/api/task-list/postTaskList";
 
 interface ListItemData {
@@ -17,11 +17,15 @@ const Lists = () => {
   const [list, setList] = useState<ListItemData[]>([]);
 
   useEffect(() => {
-    axios
-      .get("https://628bc44d667aea3a3e35eb23.mockapi.io/users/1/tasklists")
-      .then((response) => {
-        setList(response.data);
-      });
+    const loadTaskList = async () => {
+      try {
+        const newList = await getTaskList();
+        setList(newList);
+      } catch (e) {
+        alert("erro");
+      }
+    };
+    loadTaskList();
   }, []);
 
   const handleNewTaskList = async () => {

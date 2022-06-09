@@ -47,22 +47,6 @@ const Tasks = () => {
       });
   }, [listId]);
 
-  const handleTitleChange = (title: string) => {
-    axios
-      .put(
-        `https://628bc44d667aea3a3e35eb23.mockapi.io/users/1/tasklists/${listId}`,
-        {
-          name: title,
-        }
-      )
-      .then(({ data }) => {
-        setSelectedList(data);
-      })
-      .catch((e) => {
-        alert(e.message);
-      });
-  };
-
   const handleDelete = (deletedTask: any) => {
     axios
       .delete(
@@ -97,7 +81,6 @@ const Tasks = () => {
         <TaskListTitle
           listId={selectedList?.id}
           title={selectedList?.name}
-          onSubmit={handleTitleChange}
           isLoading={isLoading}
         />
         <CreateTask onChange={handleCreateTaskChange} />

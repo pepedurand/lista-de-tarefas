@@ -11,32 +11,20 @@ import {
   Box,
   Stack,
   Skeleton,
-  Icon,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { deleteTaskList } from "../../services/api/task-list/deleteTaskList";
+import { updateTaskList } from "../../services/api/task-list/updateTaskList";
 
 interface TaskListTitleProps {
   title: string;
   listId: number;
-  onSubmit: (title: string) => void;
   isLoading: boolean;
 }
 
-const TaskListTitle = ({
-  onSubmit,
-  title,
-  isLoading,
-  listId,
-}: TaskListTitleProps) => {
-  const [value, setValue] = useState(title);
-
+const TaskListTitle = ({ title, isLoading, listId }: TaskListTitleProps) => {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    setValue(title);
-  }, [title]);
 
   const EditableControls = () => {
     const {
@@ -76,8 +64,18 @@ const TaskListTitle = ({
       </Flex>
     );
   };
-  const handleChange = (newTitle: string) => {
-    setValue(newTitle);
+
+  const listTitle = useRef<any>();
+
+  const handleTitleChange = async () => {
+    try {
+      await updateTaskList({
+        listId: listId,
+        title: listTitle.current.value,
+      });
+    } catch (e) {
+      alert(e);
+    }
   };
 
   const handleDelete = async () => {
@@ -96,18 +94,17 @@ const TaskListTitle = ({
   ) : (
     <Editable
       textAlign="left"
-      defaultValue="Minha lista de tarefas fantastica!"
       fontSize="2xl"
       isPreviewFocusable={false}
       display="flex"
       alignItems="center"
       flexDir="row"
-      value={value}
-      onSubmit={onSubmit}
-      onChange={handleChange}
+      defaultValue={title}
+      key={title}
+      onSubmit={handleTitleChange}
     >
       <EditablePreview />
-      <Input width="auto" as={EditableInput} />
+      <Input width="auto" as={EditableInput} ref={listTitle} />
       <Box marginLeft="4">
         <EditableControls />
       </Box>
