@@ -73,6 +73,7 @@ const TaskListTitle = ({ title, isLoading, listId }: TaskListTitleProps) => {
         listId: listId,
         title: listTitle.current.value,
       });
+      window.location.reload();
     } catch (e) {
       alert(e);
     }
