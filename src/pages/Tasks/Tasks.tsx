@@ -68,7 +68,6 @@ const Tasks = () => {
         listId: selectedList.id,
         task: newTask,
       });
-      console.log(response);
       setTasks([response.data, ...tasks]);
     } catch (e) {
       alert("erro");
