@@ -6,6 +6,7 @@ import { CreateTask } from "../../components/CreateTask/CreateTask";
 import { Sidebar } from "../../components/Sidebar/Sidebar";
 import { TaskItem } from "../../components/TaskItem/TaskItem";
 import { TaskListTitle } from "../../components/TaskListTitle/TaskListTitle";
+import { postTask } from "../../services/api/task/postTask";
 
 interface TaskListDate {
   id: number;
@@ -61,17 +62,17 @@ const Tasks = () => {
       });
   };
 
-  const handleCreateTaskChange = (newTask: string) => {
-    axios
-      .post(
-        `https://628bc44d667aea3a3e35eb23.mockapi.io/users/1/tasklists/${listId}/tasks`,
-        {
-          task: newTask,
-        }
-      )
-      .then(({ data }) => {
-        setTasks([...tasks, data]);
+  const handleCreateTaskChange = async (newTask: string) => {
+    try {
+      const response = await postTask({
+        listId: selectedList.id,
+        task: newTask,
       });
+      console.log(response);
+      setTasks([response.data, ...tasks]);
+    } catch (e) {
+      alert("erro");
+    }
   };
 
   return (
