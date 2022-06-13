@@ -9,29 +9,46 @@ import {
   IconButton,
   useEditableControls,
 } from "@chakra-ui/react";
+import { useRef } from "react";
+import { useParams } from "react-router-dom";
+import { TaskData } from "../../pages/Tasks/Tasks";
+import { updateTask } from "../../services/api/task/updateTask";
 
 interface TaskItemProps {
-  task: any;
-  onChange: (task: any) => void;
+  task: TaskData;
 }
 
-const TaskItem = ({ task, onChange }: TaskItemProps) => {
+const TaskItem = ({ task }: TaskItemProps) => {
+  const { listId } = useParams();
+
   const TaskControls = ({ children }: any) => {
     const { getEditButtonProps } = useEditableControls();
     return <Box {...getEditButtonProps()}>{children}</Box>;
   };
 
-  const handleDelete = () => {
-    onChange(task);
+  const handleDelete = () => {};
+
+  const handleUpdate = async () => {
+    try {
+      await updateTask({
+        listId: Number(listId),
+        taskId: task.id,
+        task: taskName.current.value,
+      });
+    } catch (e) {
+      alert(e);
+    }
   };
+
+  const taskName = useRef<any>();
 
   return (
     <Grid gap="2" templateColumns="auto 1fr auto" alignItems="center">
       <Checkbox mx="4" />
-      <Editable value={task.task} onChange={task.task}>
+      <Editable defaultValue={task.task} onSubmit={handleUpdate}>
         <TaskControls>
           <EditablePreview />
-          <EditableInput />
+          <EditableInput ref={taskName} />
         </TaskControls>
       </Editable>
       <IconButton
