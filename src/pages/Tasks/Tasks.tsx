@@ -8,17 +8,17 @@ import { TaskItem } from "../../components/TaskItem/TaskItem";
 import { TaskListTitle } from "../../components/TaskListTitle/TaskListTitle";
 import { postTask } from "../../services/api/task/postTask";
 
-interface TaskListDate {
+export interface TaskData {
   id: number;
-  name: string;
+  task: string;
   createdAt: Date;
   done: boolean;
 }
 
 const Tasks = () => {
-  let { listId } = useParams();
+  const { listId } = useParams();
 
-  const [tasks, setTasks] = useState<TaskListDate[]>([]);
+  const [tasks, setTasks] = useState<TaskData[]>([]);
   const [selectedList, setSelectedList] = useState<any>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -49,17 +49,17 @@ const Tasks = () => {
   }, [listId]);
 
   const handleDelete = (deletedTask: any) => {
-    axios
-      .delete(
-        `https://628bc44d667aea3a3e35eb23.mockapi.io/users/1/tasklists/${deletedTask.listId}/tasks/${deletedTask.id}`
-      )
-      .then(({ data }) => {
-        const updatedTasks = tasks.filter((data) => data.id !== deletedTask.id);
-        setTasks([...updatedTasks]);
-      })
-      .catch((e) => {
-        alert(e.message);
-      });
+    // axios
+    //   .delete(
+    //     `https://628bc44d667aea3a3e35eb23.mockapi.io/users/1/tasklists/${deletedTask.listId}/tasks/${deletedTask.id}`
+    //   )
+    //   .then(({ data }) => {
+    //     const updatedTasks = tasks.filter((data) => data.id !== deletedTask.id);
+    //     setTasks([...updatedTasks]);
+    //   })
+    //   .catch((e) => {
+    //     alert(e.message);
+    //   });
   };
 
   const handleCreateTaskChange = async (newTask: string) => {
@@ -85,11 +85,9 @@ const Tasks = () => {
         />
         <CreateTask onChange={handleCreateTaskChange} />
         {tasks.length ? (
-          tasks.map((task) => (
-            <TaskItem key={task.id} task={task} onChange={handleDelete} />
-          ))
+          tasks.map((task) => <TaskItem key={task.id} task={task} />)
         ) : (
-          <>Nenhuma tarefa criada</>
+          <span>Nenhuma tarefa criada</span>
         )}
       </Box>
     </Grid>
