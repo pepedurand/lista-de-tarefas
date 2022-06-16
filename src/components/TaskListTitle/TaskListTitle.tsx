@@ -9,8 +9,6 @@ import {
   Input,
   EditableInput,
   Box,
-  Stack,
-  Skeleton,
 } from "@chakra-ui/react";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
@@ -20,10 +18,9 @@ import { updateTaskList } from "../../services/api/task-list/updateTaskList";
 interface TaskListTitleProps {
   title: string;
   listId: number;
-  isLoading: boolean;
 }
 
-const TaskListTitle = ({ title, isLoading, listId }: TaskListTitleProps) => {
+const TaskListTitle = ({ title, listId }: TaskListTitleProps) => {
   const navigate = useNavigate();
 
   const EditableControls = () => {
@@ -88,11 +85,7 @@ const TaskListTitle = ({ title, isLoading, listId }: TaskListTitleProps) => {
     }
   };
 
-  return isLoading ? (
-    <Stack>
-      <Skeleton height="40px" />
-    </Stack>
-  ) : (
+  return (
     <Editable
       textAlign="left"
       fontSize="2xl"
