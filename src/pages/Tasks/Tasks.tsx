@@ -22,7 +22,6 @@ const Tasks = () => {
 
   const [tasks, setTasks] = useState<TaskData[]>([]);
   const [selectedList, setSelectedList] = useState<any>();
-  const [updatedTasks, setUpdatedTasks] = useState();
 
   const loadTask = async () => {
     const loadedTasks = await getTasks({
