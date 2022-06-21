@@ -5,7 +5,8 @@ import { CreateTask } from "../../components/CreateTask/CreateTask";
 import { Sidebar } from "../../components/Sidebar/Sidebar";
 import { TaskItem } from "../../components/TaskItem/TaskItem";
 import { TaskListTitle } from "../../components/TaskListTitle/TaskListTitle";
-import { getOneTaskList } from "../../services/api/task-list/getOneTaskList";
+import { getTaskList } from "../../services/api/task-list/getTaskList";
+import { deleteTask } from "../../services/api/task/deleteTasks";
 import { getTasks } from "../../services/api/task/getTasks";
 import { postTask } from "../../services/api/task/postTask";
 
@@ -36,7 +37,7 @@ const Tasks = () => {
     };
     const loadTaskList = async () => {
       try {
-        const selectedTaskList = await getOneTaskList({
+        const selectedTaskList = await getTaskList({
           listId: Number(listId),
         });
         setSelectedList(selectedTaskList);
@@ -48,21 +49,7 @@ const Tasks = () => {
     loadTaskList();
   }, [listId]);
 
-  const handleDelete = (deletedTask: any) => {
-    // axios
-    //   .delete(
-    //     `https://628bc44d667aea3a3e35eb23.mockapi.io/users/1/tasklists/${deletedTask.listId}/tasks/${deletedTask.id}`
-    //   )
-    //   .then(({ data }) => {
-    //     const updatedTasks = tasks.filter((data) => data.id !== deletedTask.id);
-    //     setTasks([...updatedTasks]);
-    //   })
-    //   .catch((e) => {
-    //     alert(e.message);
-    //   });
-  };
-
-  const handleCreateTaskChange = async (newTask: string) => {
+  const handleCreateTask = async (newTask: string) => {
     try {
       const response = await postTask({
         listId: Number(listId),
@@ -74,14 +61,35 @@ const Tasks = () => {
     }
   };
 
+  const handleDelete = async (task: TaskData) => {
+    try {
+      await deleteTask({
+        listId: Number(listId),
+        taskId: task.id,
+      });
+      const loadedTasks = await getTasks({
+        listId: Number(listId),
+      });
+      setTasks(loadedTasks);
+    } catch (e) {
+      alert(e);
+    }
+  };
+
   return (
     <Grid templateColumns="minmax(auto, 300px) 1fr">
       <Sidebar />
       <Box padding="8">
         <TaskListTitle listId={Number(listId)} title={selectedList?.name} />
-        <CreateTask onChange={handleCreateTaskChange} />
+        <CreateTask onChange={handleCreateTask} />
         {tasks.length ? (
-          tasks.map((task) => <TaskItem key={task.id} task={task} />)
+          tasks.map((task) => (
+            <TaskItem
+              key={task.id}
+              task={task}
+              handleDelete={() => handleDelete(task)}
+            />
+          ))
         ) : (
           <span>Nenhuma tarefa criada</span>
         )}

@@ -2,7 +2,7 @@ import { CalendarIcon, PlusSquareIcon } from "@chakra-ui/icons";
 import { Box, Button, Divider, List, ListItem, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getTaskList } from "../../services/api/task-list/getTaskList";
+import { getAllTasksLists } from "../../services/api/task-list/getAllTasksLists";
 import { postTaskList } from "../../services/api/task-list/postTaskList";
 
 interface ListItemData {
@@ -19,7 +19,7 @@ const Lists = () => {
   useEffect(() => {
     const loadTaskList = async () => {
       try {
-        const newList = await getTaskList();
+        const newList = await getAllTasksLists();
         setList(newList);
       } catch (e) {
         alert("erro");

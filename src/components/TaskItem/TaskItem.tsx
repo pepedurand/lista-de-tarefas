@@ -16,17 +16,16 @@ import { updateTask } from "../../services/api/task/updateTask";
 
 interface TaskItemProps {
   task: TaskData;
+  handleDelete: () => void;
 }
 
-const TaskItem = ({ task }: TaskItemProps) => {
+const TaskItem = ({ task, handleDelete }: TaskItemProps) => {
   const { listId } = useParams();
 
   const TaskControls = ({ children }: any) => {
     const { getEditButtonProps } = useEditableControls();
     return <Box {...getEditButtonProps()}>{children}</Box>;
   };
-
-  const handleDelete = () => {};
 
   const handleUpdate = async () => {
     try {
