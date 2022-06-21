@@ -22,6 +22,7 @@ const Tasks = () => {
 
   const [tasks, setTasks] = useState<TaskData[]>([]);
   const [selectedList, setSelectedList] = useState<any>();
+  const [updatedTasks, setUpdatedTasks] = useState();
 
   const loadTask = async () => {
     const loadedTasks = await getTasks({
@@ -37,7 +38,6 @@ const Tasks = () => {
     } catch (e) {
       alert(e);
     }
-
     const loadTaskList = async () => {
       try {
         const selectedTaskList = await getTaskList({
@@ -69,7 +69,9 @@ const Tasks = () => {
         listId: Number(listId),
         taskId: task.id,
       });
-      loadTask();
+      const deletedTask = [task];
+      const filteredTasks = tasks.filter((item) => !deletedTask.includes(item));
+      setTasks(filteredTasks);
     } catch (e) {
       alert(e);
     }
