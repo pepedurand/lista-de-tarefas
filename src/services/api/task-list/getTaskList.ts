@@ -1,7 +1,13 @@
 import axios from "axios";
 import { baseUrl } from "../../../utils/constants/baseUrl";
 
-export const getTaskList = async () => {
-  const response = await axios.get(`${baseUrl}/users/1/tasklists`);
+interface getTaskListParams {
+  listId: number;
+}
+
+export const getTaskList = async (props: getTaskListParams) => {
+  const response = await axios.get(
+    `${baseUrl}/users/1/tasklists/${props.listId}`
+  );
   return response.data;
 };
