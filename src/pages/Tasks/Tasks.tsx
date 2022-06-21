@@ -23,18 +23,21 @@ const Tasks = () => {
   const [tasks, setTasks] = useState<TaskData[]>([]);
   const [selectedList, setSelectedList] = useState<any>();
 
+  const loadTask = async () => {
+    const loadedTasks = await getTasks({
+      listId: Number(listId),
+    });
+    setTasks(loadedTasks);
+  };
+
   useEffect(() => {
     if (!listId) return;
-    const loadTasks = async () => {
-      try {
-        const loadedTasks = await getTasks({
-          listId: Number(listId),
-        });
-        setTasks(loadedTasks);
-      } catch (e) {
-        alert(e);
-      }
-    };
+    try {
+      loadTask();
+    } catch (e) {
+      alert(e);
+    }
+
     const loadTaskList = async () => {
       try {
         const selectedTaskList = await getTaskList({
@@ -45,7 +48,6 @@ const Tasks = () => {
         alert(e);
       }
     };
-    loadTasks();
     loadTaskList();
   }, [listId]);
 
@@ -55,7 +57,7 @@ const Tasks = () => {
         listId: Number(listId),
         task: newTask,
       });
-      setTasks([response.data, ...tasks]);
+      setTasks([...tasks, response.data]);
     } catch (e) {
       alert("erro");
     }
@@ -67,10 +69,7 @@ const Tasks = () => {
         listId: Number(listId),
         taskId: task.id,
       });
-      const loadedTasks = await getTasks({
-        listId: Number(listId),
-      });
-      setTasks(loadedTasks);
+      loadTask();
     } catch (e) {
       alert(e);
     }
