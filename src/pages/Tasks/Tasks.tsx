@@ -69,8 +69,7 @@ const Tasks = () => {
         listId: Number(listId),
         taskId: task.id,
       });
-      const deletedTask = [task];
-      const filteredTasks = tasks.filter((item) => !deletedTask.includes(item));
+      const filteredTasks = tasks.filter((item) => item.id !== task.id);
       setTasks(filteredTasks);
     } catch (e) {
       alert(e);
